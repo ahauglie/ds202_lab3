@@ -86,9 +86,19 @@ ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom_count()
 
 ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom()
 
+pie <- ggplot(HAPPY, aes(x = "", fill = factor(DEGREE ))) + 
+  geom_bar(width = 1) +
+  theme(axis.line = element_blank(), 
+        plot.title = element_text(hjust=0.5)) + 
+  labs(fill="class", 
+       x=NULL, 
+       y=NULL, 
+       title="Pie Chart of Degree", 
+       caption="Source: HAPPY")
+  
+pie + coord_polar(theta = "y", start=0)
 
-
-
+#This pie chart is weird, it shows that more than half of the people in this data set have a highschool degree, and the average age is above 25, meaning most people in this study didnt go to college, and probably arent planning on it. 
 ```
 
 2. Investigate the relationship between happiness and three other variables in the data.
@@ -109,17 +119,6 @@ ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_g
 
 ggplot(HAPPY, aes(x=YEAR, fill=DEGREE)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + coord_flip()
 
-pie <- ggplot(HAPPY, aes(x = "", fill = factor(DEGREE ))) + 
-  geom_bar(width = 1) +
-  theme(axis.line = element_blank(), 
-        plot.title = element_text(hjust=0.5)) + 
-  labs(fill="class", 
-       x=NULL, 
-       y=NULL, 
-       title="Pie Chart of Degree", 
-       caption="Source: HAPPY")
-  
-pie + coord_polar(theta = "y", start=0)
 ```
 
 3. What do you learn from the data set? Write one or two paragraphs to describe.
