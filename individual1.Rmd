@@ -80,8 +80,7 @@ ggplot(data=HAPPY)+geom_mosaic(aes(x=product(HEALTH),fill=FINRELA))
 
 ```
 3. What do you learn from the data set? Write one or two paragraphs to describe.
-```{r}
 
-```
-Explore the dataset yourself, and then discuss and refine answers as a team.
+I feel like this dataset was a bit outdated, the degree distributions would be very different now with more people having attended college. Many of the variables seemed to have no correlation to happiness. I would have liked a more equal number of male and and female respondents. The biggest connection I found was between FINRELA and HEALTH, in which people who were poorer tended to respond with only fair or good health, whereas people who were of better finiancial standing were way more likely to respond with EXCELLENT health. 
+I didn't really understand why we had both PARTYID and POLVIEWS in the survey, I feel like this information was a bit redundant except maybe if you were to pick out a few outliers who identified as STRONG DEMOCRAT but had CONSERVATIVE polviews. This data was a bit hard to work with considering most of the variables were categorical, I tried to use examples from the Titanic dataset to help me when creating visuals but I found it a bit difficult. 
 
