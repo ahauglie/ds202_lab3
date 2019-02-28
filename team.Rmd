@@ -89,7 +89,7 @@ This graph shows us the education distribution of the people who took the survey
 
 2. Investigate the relationship between happiness and three other variables in the data.
 ```{r}
-ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + ggtitle("Plot of Happiness with Age and Finrela (Opinion of family income)") +
+ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY, scales= 'free_y') + ggtitle("Plot of Happiness with Age and Finrela (Opinion of family income)") +
   xlab("Age") + ylab("Count")
 ```
 This is a Histogram of Age which is facet wrapped with Happiness. To see the breakdown of how money affects happiness I decided to break down the fill by peoples own opinion of there income. This is the first plot that I have made that i can get some conlclusions about what increases happiness. As you can see the highest two categories of Finrela, Above Average and Far Above Average, are barely in the "NOT TOO HAPPY" plot. In contrast, the top two colums in Finrela, show a lot larger portion of the "PRETTY HAPPY" and "VERY HAPPY" plots, meaning that if peoples opinion of there income is high, there happiness is likely to be higher. 
@@ -106,8 +106,8 @@ ggplot(HAPPY, aes(x=HEALTH, y=AGE)) + geom_boxplot() +facet_wrap(~HAPPY)
 This plot is a numbber of boxplots that are broken down by age and health, then facet wrapped by health. As you can see the the plots show that as average age goes down, health goes up, which is logical in itself. We can also conclude that health does not have anything to do with happiness, as there is not an outlier of happiness with each level of health. Each level of happiness has the same shape of boxplots.
 
 3. What do you learn from the data set? Write one or two paragraphs to describe.
-```{r}
 
-```
-Explore the dataset yourself, and then discuss and refine answers as a team.
+My conlcusions are that I learned that working with categorical data can be very frustring especially when we have really only one colummn of continous data, age. This was tough to find any correlations between happiness and other variables. I did, however, find that with the opinion of family income does have an effect on happiness, which makes sense logically. More money would probably result in more happiness. When looking at health, i didn't find a significance between health and happiness. 
+
+Overall, I did not like using this data set. It seemed very skewed that 3/4 of the data was people who had only a highschool degree or lower. This might have been closer to the actual population in the 1970's when this was taken, but as of the last few years this seems very low to represent the population.
 

@@ -12,7 +12,6 @@ data(happy, package="productplots")
 head(happy)
 HAPPY <- readRDS("HAPPY.rds")
 library(plyr)
-install.packages('ggthemes', dependencies = TRUE)
 library(ggmosaic)
 library(dplyr)
 library(ggthemes)
@@ -76,15 +75,12 @@ Use ggplot2 to create the plots. Your exploration should make use all elements o
 
 1. Investigate the distributions of 2 different variables.
 ```{r}
-ggplot(data=HAPPY, aes(x = AGE, main = "Histogram for Age" )) + geom_histogram(binwidth = 5)
 ggplot(data=HAPPY,aes(x=MARITAL))+ geom_bar(fill="lightblue") + facet_wrap(~SEX) + coord_flip()
 
 ggplot(HAPPY, aes(x= HAPPY)) + geom_bar( aes(fill=..count..)) + scale_fill_gradient("Count", low="green", high ="red") 
-ggplot(HAPPY, aes(x=AGE)) + geom_area(binwidth = 1) + facet_wrap(~YEAR)
 
 ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom_count()
 
-ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom()
 
 pie <- ggplot(HAPPY, aes(x = "", fill = factor(DEGREE ))) + 
   geom_bar(width = 1) +
@@ -119,13 +115,24 @@ ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_g
 
 ggplot(HAPPY, aes(x=YEAR, fill=DEGREE)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + coord_flip()
 
+
+p <- ggplot(HAPPY, aes(x=HAPPY, y=AGE)) + geom_boxplot()
+p + ggtitle("Plot of happiness by Age") +
+  xlab("Happiness") + ylab("age")
+
+ggplot(HAPPY, aes(x=HEALTH, y=AGE)) + geom_boxplot() +facet_wrap(~HAPPY)
+# This plot is a numbber of boxplots that are broken down by age and health, then facet wrapped by health. As you can see the the plots show that as average age goes down, health goes up, which is logical in itself. We can also conclude that health does not have anything to do with happiness, as there is not an outlier of happiness with each level of health. Each level of happiness has the same shape of boxplots. 
 ```
 
 3. What do you learn from the data set? Write one or two paragraphs to describe.
 Explore the dataset yourself, and then discuss and refine answers as a team.
-```{r}
 
-```
+My conlcusions are that I learned that working with categorical data can be very frustring especially when we have really only one colummn of continous data, age. This was tough to find any correlations between happiness and other variables. I did, however, find that with the opinion of family income does have an effect on happiness, which makes sense logically. More money would probably result in more happiness. When looking at health, i didn't find a significance between health and happiness. 
+
+Overall, I did not like using this data set. It seemed very skewed that 3/4 of the data was people who had only a highschool degree or lower. This might have been closer to the actual population in the 1970's when this was taken, but as of the last few years this seems very low to represent the population.
+
+
+
 
 
 
