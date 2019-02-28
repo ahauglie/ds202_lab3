@@ -9,22 +9,54 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+data(happy, package="productplots")
+head(happy)
+HAPPY <- readRDS("HAPPY.rds")
 ```
 
-## Including Plots
+finrela <- opinion of family income
+polviews <- think of self as liberal or conservative
+wttsall <- weight variable
+Inapplicable (IAP) <- respondents who are not asked to answer a specific question 
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+1. Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.
+```{r}
+library(dplyr)
+library(ggplot2)
+HAPPY[HAPPY == "IAP"] <- NA
+HAPPY[HAPPY == "DK"] <- NA
+HAPPY[HAPPY == "NA"] <- NA
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+2. Check the type of the variable and cast into the right type (factor variable for categorical variables). For age, change “89 OR OLDER” to 89 and assume the variable should be numeric. (Hint: see ?as.character and ?as.numeric)
+```{r}
+HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = recode(AGE, "89 OR OLDER" = "89")) %>% mutate(AGE = as.numeric(levels(AGE)[AGE]))
+str(HAPPY$AGE)
+```
+3. Bring all levels of factors into a sensible order. For marital you could e.g. order the levels according to average age.
+```{r}
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, levels = c("NEVER MARRIED", "MARRIED", "SEPARATED", "DIVORCED", "WIDOWED"))) %>% arrange(desc(MARITAL))
+
+HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY, levels = c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY"))) %>% arrange(desc(HAPPY))
+
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, levels = c("NEVER MARRIED", "MARRIED", "SEPARATED", "DIVORCED", "WIDOWED"))) %>% arrange(desc(MARITAL))
+
+View(HAPPY)
+```
+
+**PART TWO**
+1. Investigate the distributions of 2 different variables.
+```{r}
+
+```
+2. Investigate the relationship between happiness and three other variables in the data.
+```{r}
+
+```
+3. What do you learn from the data set? Write one or two paragraphs to describe.
+```{r}
+
+```
+Explore the dataset yourself, and then discuss and refine answers as a team.
+
