@@ -100,6 +100,11 @@ ggplot(data=HAPPY)+geom_mosaic(aes(x=product(HEALTH),fill=FINRELA))
 ```
 This graph shows us how the survey takers financial situations are distributed in relation to how they said their health was. As you can see, no one who took the survey said they had poor health. The graph shows that people are more likely to answer that they are only in FAIR health when their financial situation falls in the FAR BELOW AVERAGE or BELOW AVERAGE category. We might conclude that people in worse financial situations are less happy, possibly because of the stress that comes with this. This also shows that less than 20% of the respondents said they were in FAIR health. People who answered EXCELLENT health are also more likely to have a finrela in the ABOVE AVERAGE or FAR ABOVE AVERAGE category. 
 
+```{r}
+ggplot(HAPPY, aes(x=HEALTH, y=AGE)) + geom_boxplot() +facet_wrap(~HAPPY)
+```
+This plot is a numbber of boxplots that are broken down by age and health, then facet wrapped by health. As you can see the the plots show that as average age goes down, health goes up, which is logical in itself. We can also conclude that health does not have anything to do with happiness, as there is not an outlier of happiness with each level of health. Each level of happiness has the same shape of boxplots.
+
 3. What do you learn from the data set? Write one or two paragraphs to describe.
 ```{r}
 
