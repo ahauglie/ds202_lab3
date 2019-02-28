@@ -72,7 +72,6 @@ library(ggmosaic)
 ggplot(data=HAPPY)+geom_mosaic(aes(x=product(AGE),fill=SEX))+facet_wrap(HAPPY$HAPPY)
 
 
-ggplot(data=HAPPY)+geom_boxplot(aes=FINRELA)
 ggplot(data=HAPPY, aes(y=(AGE)))+geom_boxplot()+facet_wrap(HAPPY$FINRELA)+coord_flip()
 
 library(ggmosaic)
