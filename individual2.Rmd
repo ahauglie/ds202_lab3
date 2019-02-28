@@ -7,22 +7,109 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+data(happy, package="productplots")
+head(happy)
+HAPPY <- readRDS("HAPPY.rds")
+library(plyr)
+library(ggmosaic)
+library(dplyr)
 ```
 
-## Including Plots
+finrela <- Opinion of family income
+polviews <- Think of self as liberal or conservative
+wttsall <- weight variable
+Inapplicable (IAP). Respondents who are not asked to answer a specific question are assigned to IAP.
 
-You can also embed plots, for example:
+Answer each of the following questions using R code to get an answer. Write a separate code chunk to manipulate each variable. Once all the data manipulation is done, show the values in a barchart or histogram and comment on the plot. Use ggplot2 to create the plots.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+1. Data cleaning: the values “IAP”, “DK” and “NA” all encode missing values. Replace all of these instances by the value NA.
+```{r}
+library(dplyr)
+library(ggplot2)
+HAPPY[HAPPY == "IAP"] <- NA
+HAPPY[HAPPY == "DK"] <- NA
+HAPPY[HAPPY == "NA"] <- NA
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+2. Check the type of the variable and cast into the right type (factor variable for categorical variables). For age, change “89 OR OLDER” to 89 and assume the variable should be numeric. (Hint: see ?as.character and ?as.numeric)
+```{r}
+HAPPY <- HAPPY %>% mutate_if(is.character, as.factor) %>% mutate(AGE = recode(AGE, "89 OR OLDER" = "89")) %>% mutate(AGE = as.numeric(levels(AGE)[AGE]))
+str(HAPPY$AGE)
+str(HAPPY)
+```
+
+3. Bring all levels of factors into a sensible order. For marital you could e.g. order the levels according to average age.
+```{r}
+HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, levels = c("NEVER MARRIED", "MARRIED", "SEPARATED", "DIVORCED", "WIDOWED"))) %>% arrange(desc(MARITAL))
+
+ HAPPY <- HAPPY %>% mutate( HAPPY= factor(HAPPY, levels = c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY"))) %>% arrange(desc(HAPPY))
+ 
+HAPPY <- HAPPY %>%
+  mutate( DEGREE= factor(DEGREE, 
+                          levels = c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE"))) %>% arrange(desc(DEGREE))
+
+HAPPY <- HAPPY %>%
+  mutate( FINRELA= factor(FINRELA, 
+                          levels = c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE"))) %>% 
+  arrange(desc(FINRELA))
+
+HAPPY <- HAPPY %>%
+  mutate( HEALTH= factor(HEALTH, 
+                          levels = c("POOR ", "FAIR", "GOOD", "EXCELLENT"))) %>% arrange(desc(HEALTH))
+
+HAPPY <- HAPPY %>%
+  mutate( PARTYID= factor(PARTYID, 
+                          levels = c("STRONG DEMOCRAT", "NOT STR DEMOCRAT", "IND,NEAR DEM", "INDEPENDENT", "IND,NEAR REP", "NOT STR REPUBLICAN","STRONG REPUBLICAN", "OTHER PARTY"))) %>% arrange(desc(PARTYID))
+
+HAPPY <- HAPPY %>%
+  mutate( POLVIEWS= factor(POLVIEWS, 
+                          levels = c("EXTREMELY LIBERAL", "LIBERAL", "SLIGHTLY LIBERAL", "MODERATE", "SLIGHTLY CONSERVATIVE", "CONSERVATIVE","EXTRMELY CONSERVATIVE"))) %>% arrange(desc(POLVIEWS))
+levels(HAPPY$POLVIEWS)
+```
+
+Part 2
+Happiness!
+Use ggplot2 to create the plots. Your exploration should make use all elements of the grammar of graphics: mappings (color, fill, and size at least), different geoms (4 at least), scales, coordinates (eg coord_flip), facet, and theme (eg setting axis labels and title). For each investigation, create an appropriate visualization and write a paragraph to describe it.
+
+1. Investigate the distributions of 2 different variables.
+```{r}
+ggplot(data=HAPPY, aes(x = AGE, main = "Histogram for Age" )) + geom_histogram(binwidth = 5)
+ggplot(data=HAPPY,aes(x=MARITAL))+ geom_bar(fill="lightblue") + facet_wrap(~SEX) + coord_flip()
+ggplot(HAPPY, aes(x= HAPPY)) + geom_bar( aes(fill=..count..)) + scale_fill_gradient("Count", low="green", high ="red") 
+ggplot(HAPPY, aes(x=AGE)) + geom_area(binwidth = 1) + facet_wrap(~YEAR)
+
+ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom_count()
+
+ggplot(HAPPY, aes(x=AGE, y=HAPPY)) + geom()
+
+
+
+
+```
+
+2. Investigate the relationship between happiness and three other variables in the data.
+```{r}
+ggplot(HAPPY, aes(x=SEX)) +geom_bar() + facet_wrap(~HAPPY)
+ggplot(HAPPY, aes(x=HEALTH)) +geom_bar() + facet_wrap(~HAPPY)
+ggplot(HAPPY, aes(x=DEGREE)) +geom_bar() + facet_wrap(~HAPPY) + coord_flip()
+
+ggplot(HAPPY, aes(x=AGE, fill=SEX)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY)
+# THE COUNT OF HAPPINESS SEEMS VERY EVEN THROUGHOUT THE SEXES, and shows that happiness doesn't depend on age as each graph has the same shape.
+ggplot(HAPPY, aes(x=AGE, fill=HEALTH)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY)
+
+ggplot(HAPPY, aes(x=YEAR, fill=DEGREE)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + coord_flip()
+
+
+```
+
+3. What do you learn from the data set? Write one or two paragraphs to describe.
+Explore the dataset yourself, and then discuss and refine answers as a team.
+```{r}
+
+```
+
+
+
+
+
