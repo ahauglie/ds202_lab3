@@ -84,6 +84,8 @@ pie <- ggplot(HAPPY, aes(x = "", fill = factor(DEGREE ))) +
   
 pie + coord_polar(theta = "y", start=0)
 ```
+This graph shows us the education distribution of the people who took the survey. An interesting point is that over half of people who took this survey only have a high school education, even though most of the people surveyed are over the age of 25. It might be good to point out that this survey was taken years ago because if you were to survey random people above the age of 25 nowadays, you would find a much larger proportion of people who have had at least some college education. This is probably not a very representative sample, as only about 30% of the survey takers have more than a high school education. 
+
 2. Investigate the relationship between happiness and three other variables in the data.
 ```{r}
 

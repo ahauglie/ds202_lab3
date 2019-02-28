@@ -40,16 +40,32 @@ HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, levels = c("NEVER MARRIED", 
 
 HAPPY <- HAPPY %>% mutate(HAPPY = factor(HAPPY, levels = c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY"))) %>% arrange(desc(HAPPY))
 
-HAPPY <- HAPPY %>% mutate(MARITAL = factor(MARITAL, levels = c("NEVER MARRIED", "MARRIED", "SEPARATED", "DIVORCED", "WIDOWED"))) %>% arrange(desc(MARITAL))
+HAPPY <- HAPPY %>% mutate(DEGREE = factor(DEGREE, levels = c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE"))) %>% arrange(desc(DEGREE))
 
-View(HAPPY)
+HAPPY <- HAPPY %>% mutate(FINRELA = factor(FINRELA, levels = c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE"))) %>% arrange(desc(FINRELA))
+
+HAPPY <- HAPPY %>% mutate(HEALTH = factor(HEALTH, levels = c("POOR", "FAIR", "GOOD", "EXCELLENT"))) %>% arrange(desc(HEALTH))
+
+HAPPY <- HAPPY %>% mutate(PARTYID = factor(PARTYID, levels = c("STRONG DEMOCRAT", "NOT STR DEMOCRAT", "IND,NEAR DEM", "INDEPENDENT", "IND,NEAR REP", "NOT STR REPUBLICAN", "STRONG REPUBLICAN", "OTHER PARTY"))) %>% arrange(desc(PARTYID))
+
+HAPPY <- HAPPY %>% mutate(POLVIEWS = factor(POLVIEWS, levels = c("EXTREMELY LIBERAL", "LIBERAL", "SLIGHTLY LIBERAL", "MODERATE", "SLIGHTLY CONSERVATIVE", "CONSERVATIVE", "EXTRMLY CONSERVATIVE"))) %>% arrange(desc(POLVIEWS))
+
 ```
 
 **PART TWO**
 1. Investigate the distributions of 2 different variables.
 ```{r}
+ggplot(data=HAPPY, aes(x=DEGREE))+geom_bar(fill="darkgreen")+facet_wrap(~SEX)+coord_flip()
+```
+this shows us the distribution of education between the sexes.
+```{r}
+ggplot(data=HAPPY, aes(x=AGE))+geom_histogram(binwidth=1, fill="darkorange")+facet_wrap(~SEX)
 
 ```
+this shows us the age distribution between the sexes, it also shows that more women took this survey than men. 
+
+
+
 2. Investigate the relationship between happiness and three other variables in the data.
 ```{r}
 
