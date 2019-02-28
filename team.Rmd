@@ -91,7 +91,13 @@ This graph shows us the education distribution of the people who took the survey
 ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + ggtitle("Plot of Happiness with Age and Finrela (Opinion of family income)") +
   xlab("Age") + ylab("Count")
 ```
-This is a Hitogram of Age which is facet wrapped with Happiness. To see the breakdown of how money affects happiness I decided to break down the fill by peoples own opinion of there income. This is the first plot that I have made that i can get some conlclusions about what increases happiness. As you can see the highest two categories of Finrela, Above Average and Far Above Average, are barely in the "NOT TOO HAPPY" plot. In contrast, the top two colums in Finrela, show a lot larger portion of the "PRETTY HAPPY" and "VERY HAPPY" plots, meaning that if peoples opinion of there income is high, there happiness is likely to be higher. 
+This is a Histogram of Age which is facet wrapped with Happiness. To see the breakdown of how money affects happiness I decided to break down the fill by peoples own opinion of there income. This is the first plot that I have made that i can get some conlclusions about what increases happiness. As you can see the highest two categories of Finrela, Above Average and Far Above Average, are barely in the "NOT TOO HAPPY" plot. In contrast, the top two colums in Finrela, show a lot larger portion of the "PRETTY HAPPY" and "VERY HAPPY" plots, meaning that if peoples opinion of there income is high, there happiness is likely to be higher. 
+
+```{r}
+library(ggmosaic)
+ggplot(data=HAPPY)+geom_mosaic(aes(x=product(HEALTH),fill=FINRELA))
+```
+This graph shows us how the survey takers financial situations are distributed in relation to how they said their health was. As you can see, no one who took the survey said they had poor health. The graph shows that people are more likely to answer that they are only in FAIR health when their financial situation falls in the FAR BELOW AVERAGE or BELOW AVERAGE category. We might conclude that people in worse financial situations are less happy, possibly because of the stress that comes with this. This also shows that less than 20% of the respondents said they were in FAIR health. People who answered EXCELLENT health are also more likely to have a finrela in the ABOVE AVERAGE or FAR ABOVE AVERAGE category. 
 
 3. What do you learn from the data set? Write one or two paragraphs to describe.
 ```{r}
