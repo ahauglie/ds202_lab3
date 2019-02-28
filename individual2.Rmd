@@ -12,8 +12,10 @@ data(happy, package="productplots")
 head(happy)
 HAPPY <- readRDS("HAPPY.rds")
 library(plyr)
+install.packages('ggthemes', dependencies = TRUE)
 library(ggmosaic)
 library(dplyr)
+library(ggthemes)
 ```
 
 finrela <- Opinion of family income
@@ -76,6 +78,7 @@ Use ggplot2 to create the plots. Your exploration should make use all elements o
 ```{r}
 ggplot(data=HAPPY, aes(x = AGE, main = "Histogram for Age" )) + geom_histogram(binwidth = 5)
 ggplot(data=HAPPY,aes(x=MARITAL))+ geom_bar(fill="lightblue") + facet_wrap(~SEX) + coord_flip()
+
 ggplot(HAPPY, aes(x= HAPPY)) + geom_bar( aes(fill=..count..)) + scale_fill_gradient("Count", low="green", high ="red") 
 ggplot(HAPPY, aes(x=AGE)) + geom_area(binwidth = 1) + facet_wrap(~YEAR)
 
@@ -96,11 +99,27 @@ ggplot(HAPPY, aes(x=DEGREE)) +geom_bar() + facet_wrap(~HAPPY) + coord_flip()
 
 ggplot(HAPPY, aes(x=AGE, fill=SEX)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY)
 # THE COUNT OF HAPPINESS SEEMS VERY EVEN THROUGHOUT THE SEXES, and shows that happiness doesn't depend on age as each graph has the same shape.
-ggplot(HAPPY, aes(x=AGE, fill=HEALTH)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY)
+
+
+
+ggplot(HAPPY, aes(x=AGE, fill=FINRELA)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + ggtitle("Plot of Happiness with Age and Finrela (Opinion of family income)") +
+  xlab("Age") + ylab("Count")
+# This is a Hitogram of Age which is facet wrapped with Happiness. To see the breakdown of how money affects happiness I decided to break down the fill by peoples own opinion of there income. This is the first plot that I have made that i can get some conlclusions about what increases happiness. As you can see the highest two categories of Finrela, Above Average and Far Above Average, are barely in the "NOT TOO HAPPY" plot. In contrast, the top two colums in Finrela, show a lot larger portion of the "PRETTY HAPPY" and "VERY HAPPY" plots, meaning that if peoples opinion of there income is high, there happiness is likely to be higher. 
+
 
 ggplot(HAPPY, aes(x=YEAR, fill=DEGREE)) + geom_histogram(binwidth = 5) + facet_grid(~HAPPY) + coord_flip()
 
-
+pie <- ggplot(HAPPY, aes(x = "", fill = factor(DEGREE ))) + 
+  geom_bar(width = 1) +
+  theme(axis.line = element_blank(), 
+        plot.title = element_text(hjust=0.5)) + 
+  labs(fill="class", 
+       x=NULL, 
+       y=NULL, 
+       title="Pie Chart of Degree", 
+       caption="Source: HAPPY")
+  
+pie + coord_polar(theta = "y", start=0)
 ```
 
 3. What do you learn from the data set? Write one or two paragraphs to describe.
