@@ -67,8 +67,9 @@ levels(HAPPY$POLVIEWS)
  **PART TWO**
 1. Investigate the distributions of 2 different variables.
 ```{r}
-
+ggplot(HAPPY, aes(x= HAPPY)) + geom_bar( aes(fill=..count..)) + scale_fill_gradient("Count", low="green", high ="red") 
 ```
+This graph shows the overall distribution of happiness without accounting for any other variable. We can easily see, by the color, that PRETTY HAPPY, is the most selected choice, and VERY HAPPY is the second most selected choice. This makes sense to me, as people want to be happy, so the distribution would favor the happy side. So overall, we can see that around half of the participants chose PRETTY HAPPY as there level of happiness. 
 2. Investigate the relationship between happiness and three other variables in the data.
 ```{r}
 
